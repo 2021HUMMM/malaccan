@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Item(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=255)  
     stock = models.IntegerField()
     price = models.IntegerField()  
