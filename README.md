@@ -96,7 +96,7 @@ ini untuk menghubungkan URL dari aplikasi main ke proyek django
 
 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 
-![Alt text](https://ibb.co.com/B2M730r)
+![Bagan](https://i.ibb.co.com/b59ymc2/Smart-Select-20240910-235020-Samsung-Notes.jpg)
 
 User akan mengirim request dari web browser. Requestnya selanjutnya akan diterima server dan masuk ke urls.py dan kemudian diarahkan ke show_main. data-data dari context pada show_main kemudian akan masuk ke main.html yang berada di dalam direktori templates. selanjutnya show_main akan render main.html dan disalurkan sebagai response untuk user
 
