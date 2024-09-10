@@ -1,33 +1,35 @@
 # Malaccan
-Checklist Tugas
-Checklist untuk tugas ini adalah sebagai berikut.
-
- Membuat sebuah proyek Django baru.
- Membuat aplikasi dengan nama main pada proyek tersebut.
- Melakukan routing pada proyek agar dapat menjalankan aplikasi main.
- Membuat model pada aplikasi main dengan nama Product dan memiliki atribut wajib sebagai berikut.
-name
-price
-description
- Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.
- Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py.
- Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.
- Membuat sebuah README.md yang berisi tautan menuju aplikasi PWS yang sudah di-deploy, serta jawaban dari beberapa pertanyaan berikut.
-
 Deployment Link PWS : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
 
 Jawaban pertanyaan:
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
---> saya membuat proyek django baru setelah melakukan "pip install -r requirements.txt" untuk mendownload segala perlengkapan yang dibutuhkan dengan melaksanakan "django-admin startproject malaccan ."
+--> saya membuat repo github baru untuk proyek ini. kemudian, saya hubungkan dengan local repository saya dengan git.
+
+--> saya membuat requirements.txt yang berisi segala perlengkapan yang dibutuhkan. lalu saya download dengan melakukan hal berikut:
+
+pip install -r requirements.txt
+
+--> lalu saya memulai project django baru dengan melaksanakan kode berikut:
+
+django-admin startproject malaccan .
+
+--> saya kemudian membuat dokumen .gitignore untuk meng-exclude beberapa file pada direktori lokal saya.
 
 --> setelah setup untuk proyek django sudah selesai, saya memulai aplikasi main pada proyek tersebut dengan menjalankan "python manage.py startapp main" dengan ini directory baru bernama main akan terbentuk
 
---> saya kemudian mendaftarkan app main pada installed app
+--> saya kemudian mendaftarkan app main pada installed app pada settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'main'
+]
 
---> pada models.py yang berada di bawah direktori main, saya menambahkan kelas bernama Products yang memiliki attribute berupa data-data yang akan disimpan oleh program, yaitu name, price, description, dan stock. saya juga menambah method untuk mengembalikan nama dari produk apabila dipanggil.
-
-berikut kodenya:
+--> saya kemudian menambah kelas pada models.py yaitu Product dengan attribute name, stock, price, description. saya juga menambah method untuk mengembalikan nama dari produk apabila produknya dipanggil
 
 class Product(models.Model):
     name = models.CharField(max_length=255)  
@@ -38,21 +40,65 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
--->saya kemudian membuat fungsi pada views.py yang berada dibawah direktori main.py
+--> setelah melakukan perubahan pada models.py, saya melakukan migration dengan command berikut:
+
+python manage.py makemigrations
+python manage.py migrate
+
+-->saya kemudian membuat direktori templates yang saya isi dengan file main.html
+
+-->saya kemudian membuat fungsi pada views.py yang berada dibawah direktori main untuk dihubungkan dengan main.html
+
+berikut adalah isinya:
+
+def show_main(request):
+    products = Product.objects.all()  # Mengambil semua produk dari database
+    context = {
+        'shop_name': 'Malaccan',
+        'npm' : '2306210714',
+        'name' : 'Ilham Satya Nusabhakti',
+        'class' : 'PBP C',
+        'products': products,  # Produk-produk yang diambil dari model
+    }
+    return render(request, "main.html", context)
+
+--> saya kemudian membuat file urls.py pada direktori main.
+
+isinya adalah sebagai berikut:
+
+from django.urls import path
+from main.views import show_main
+
+app_name = 'main'
+
+urlpatterns = [
+    path('', show_main, name='show_main'),
+]
+
+ini digunakan untuk menghubungkan URL root dari aplikasi main ke show_main
+
+-->kemudian saya memodifikasi urls.py yang ada pada direktori malaccan (proyek saya) menjadi seperti berikut:
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('main.urls'))
+]
+
+ini untuk menghubungkan URL dari aplikasi main ke proyek django
+
+-->kemudian saya membuat proyek pada PWS. setelah itu saya hubungkan proyek tersebut dengan repositori git saya.
+
+-->saya melakukan add, commit, dan push ke remote yang saya daftarkan pada git yaitu origin (github) dan pws
 
 
 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 
--->
+![Alt text](https://ibb.co.com/B2M730r)
 
-Berikut bagannya:
-
-CLIENT ----------> BROWSER ----------> VIEW ----------> MODEL
-                                        |
-                                        |
-                                        |
-                                        |-------------> TEMPLATE
-
+User akan mengirim request dari web browser. Requestnya selanjutnya akan diterima server dan masuk ke urls.py dan kemudian diarahkan ke show_main. data-data dari context pada show_main kemudian akan masuk ke main.html yang berada di dalam direktori templates. selanjutnya show_main akan render main.html dan disalurkan sebagai response untuk user
 
 3. Jelaskan fungsi git dalam pengembangan perangkat lunak!
 
