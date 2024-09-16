@@ -1,113 +1,372 @@
-# Malaccan
-Deployment Link PWS : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
+PWS : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
 
-Jawaban pertanyaan:
-1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+# Malaccan: Delivering Goods Across the Globe with Generational Trust, Like the Malacca Strait's Legacy in Global Trade.
 
---> saya membuat repo github baru untuk proyek ini. kemudian, saya hubungkan dengan local repository saya dengan git.
+# Contents:
+- [Jawaban Tugas 2](#tugas-2)
+- [Jawaban Tugas 3](#tugas-3)
+- [Screen Shot PostMan](#screenshot-postman)
+#
+# Tugas 2
+## Jawaban pertanyaan:
+1. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
 
---> saya membuat requirements.txt yang berisi segala perlengkapan yang dibutuhkan. lalu saya download dengan melakukan hal berikut:
+    - saya membuat repo github baru untuk proyek ini. kemudian, saya hubungkan dengan local repository saya dengan git.
 
-pip install -r requirements.txt
+    - saya membuat requirements.txt yang berisi segala perlengkapan yang dibutuhkan. lalu saya download dengan melakukan hal berikut:
+        ```bash
+        pip install -r requirements.txt
+        ``` 
 
---> lalu saya memulai project django baru dengan melaksanakan kode berikut:
+    - lalu saya memulai project django baru dengan melaksanakan kode berikut:
+        ```bash
+        django-admin startproject malaccan .
+        ```
 
-django-admin startproject malaccan .
+    - saya kemudian membuat dokumen .gitignore untuk meng-exclude beberapa file pada direktori lokal saya.
 
---> saya kemudian membuat dokumen .gitignore untuk meng-exclude beberapa file pada direktori lokal saya.
+    - setelah setup untuk proyek django sudah selesai, saya memulai aplikasi main pada proyek tersebut dengan menjalankan "python manage.py startapp main" dengan ini directory baru bernama main akan terbentuk
 
---> setelah setup untuk proyek django sudah selesai, saya memulai aplikasi main pada proyek tersebut dengan menjalankan "python manage.py startapp main" dengan ini directory baru bernama main akan terbentuk
+    - saya kemudian mendaftarkan app main pada installed app pada settings.py
+        ```bash
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'main'
+        ]
+        ```
 
---> saya kemudian mendaftarkan app main pada installed app pada settings.py
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'main'
-]
+    - saya kemudian menambah kelas pada models.py yaitu Product dengan attribute name, stock, price, description. saya juga menambah method untuk mengembalikan nama dari produk apabila produknya dipanggil
+        ```bash
+        class Product(models.Model):
+            name = models.CharField(max_length=255)  
+            stock = models.IntegerField()
+            price = models.IntegerField()  
+            description = models.TextField()  
 
---> saya kemudian menambah kelas pada models.py yaitu Product dengan attribute name, stock, price, description. saya juga menambah method untuk mengembalikan nama dari produk apabila produknya dipanggil
+            def __str__(self):
+                return self.name
+        ```
 
-class Product(models.Model):
-    name = models.CharField(max_length=255)  
-    stock = models.IntegerField()
-    price = models.IntegerField()  
-    description = models.TextField()  
+    - setelah melakukan perubahan pada models.py, saya melakukan migration dengan command berikut:
+        ```bash
+        python manage.py makemigrations
+        python manage.py migrate
+        ```
 
-    def __str__(self):
-        return self.name
+    - saya kemudian membuat direktori templates yang saya isi dengan file main.html
 
---> setelah melakukan perubahan pada models.py, saya melakukan migration dengan command berikut:
+    - saya kemudian membuat fungsi pada views.py yang berada dibawah direktori main untuk dihubungkan dengan main.html. berikut adalah isinya:
+        ```bash
+        def show_main(request):
+            products = Product.objects.all()  # Mengambil semua produk dari database
+            context = {
+                'shop_name': 'Malaccan',
+                'npm' : '2306210714',
+                'name' : 'Ilham Satya Nusabhakti',
+                'class' : 'PBP C',
+                'products': products,  # Produk-produk yang diambil dari model
+            }
+            return render(request, "main.html", context)
+        ```
 
-python manage.py makemigrations
-python manage.py migrate
+    - saya kemudian membuat file urls.py pada direktori main. isinya adalah sebagai berikut:
+        ```bash
+        from django.urls import path
+        from main.views import show_main
 
--->saya kemudian membuat direktori templates yang saya isi dengan file main.html
+        app_name = 'main'
 
--->saya kemudian membuat fungsi pada views.py yang berada dibawah direktori main untuk dihubungkan dengan main.html
+        urlpatterns = [
+            path('', show_main, name='show_main'),
+        ]
+        ```
+        ini digunakan untuk menghubungkan URL root dari aplikasi main ke show_main
 
-berikut adalah isinya:
+    - kemudian saya memodifikasi urls.py yang ada pada direktori malaccan (proyek saya) menjadi seperti berikut:
+        ```bash
+        from django.contrib import admin
+        from django.urls import path, include
 
-def show_main(request):
-    products = Product.objects.all()  # Mengambil semua produk dari database
-    context = {
-        'shop_name': 'Malaccan',
-        'npm' : '2306210714',
-        'name' : 'Ilham Satya Nusabhakti',
-        'class' : 'PBP C',
-        'products': products,  # Produk-produk yang diambil dari model
-    }
-    return render(request, "main.html", context)
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('', include('main.urls'))
+        ]
+        ```
+        ini untuk menghubungkan URL dari aplikasi main ke proyek django
 
---> saya kemudian membuat file urls.py pada direktori main.
+    - kemudian saya membuat proyek pada PWS. setelah itu saya hubungkan proyek tersebut dengan repositori git saya.
 
-isinya adalah sebagai berikut:
-
-from django.urls import path
-from main.views import show_main
-
-app_name = 'main'
-
-urlpatterns = [
-    path('', show_main, name='show_main'),
-]
-
-ini digunakan untuk menghubungkan URL root dari aplikasi main ke show_main
-
--->kemudian saya memodifikasi urls.py yang ada pada direktori malaccan (proyek saya) menjadi seperti berikut:
-
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main.urls'))
-]
-
-ini untuk menghubungkan URL dari aplikasi main ke proyek django
-
--->kemudian saya membuat proyek pada PWS. setelah itu saya hubungkan proyek tersebut dengan repositori git saya.
-
--->saya melakukan add, commit, dan push ke remote yang saya daftarkan pada git yaitu origin (github) dan pws
+    - saya melakukan add, commit, dan push ke remote yang saya daftarkan pada git yaitu origin (github) dan pws
 
 
-2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+2. **Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.**
 
-![Bagan](https://i.ibb.co.com/vLStQM3/bagan-django.jpg)
+    ![Bagan](https://i.ibb.co.com/vLStQM3/bagan-django.jpg)
 
 User akan mengirim request dari web browser. Requestnya selanjutnya akan diterima server dan masuk ke urls.py dan kemudian diarahkan ke show_main. data-data dari context pada show_main kemudian akan masuk ke main.html yang berada di dalam direktori templates. selanjutnya show_main akan render main.html dan disalurkan sebagai response untuk user
 
-3. Jelaskan fungsi git dalam pengembangan perangkat lunak!
+3. **Jelaskan fungsi git dalam pengembangan perangkat lunak!**
 
---> git sebagai version control berperan untuk menyimpan berbagai versi dari program kita sendiri agar jalan pemrograman semakin terkontrol dan lebih aman dari modifikasi yang menyebabkan error atau kesalahan. git juga memungkinkan kolaborasi, yang sangat mungkin terjadi dalam konteks pengembangan perangkat lunak. fitur dari git juga banyak yang membantu seperti branching yang bisa kita gunakan untuk mengetes sebuah fitur baru yang belum kita ingin finalisasi dan integrasikan ke main branch.
+git sebagai version control berperan untuk menyimpan berbagai versi dari program kita sendiri agar jalan pemrograman semakin terkontrol dan lebih aman dari modifikasi yang menyebabkan error atau kesalahan. git juga memungkinkan kolaborasi, yang sangat mungkin terjadi dalam konteks pengembangan perangkat lunak. fitur dari git juga banyak yang membantu seperti branching yang bisa kita gunakan untuk mengetes sebuah fitur baru yang belum kita ingin finalisasi dan integrasikan ke main branch.
 
-4. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
+4. **Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?**
 
---> pertama, django menggunakan bahasa pemrograman yang kami, mahasiswa fasilkom, sudah familiar yaitu python. django memiliki struktur yang terorganisasi, memudahkan programmer untuk memahami dari dasar. Model ORM pada django juga memudahkan interaksi programmer dengan database, karena hanya perlu menggunakan python saja. Selain itu, django juga terkenal dengan keamanannya.
+pertama, django menggunakan bahasa pemrograman yang kami, mahasiswa fasilkom, sudah familiar yaitu python. django memiliki struktur yang terorganisasi, memudahkan programmer untuk memahami dari dasar. Model ORM pada django juga memudahkan interaksi programmer dengan database, karena hanya perlu menggunakan python saja. Selain itu, django juga terkenal dengan keamanannya.
 
-5. Mengapa model pada Django disebut sebagai ORM?
+5. **Mengapa model pada Django disebut sebagai ORM?**
 
---> Model pada django disebut ORM (Object Relational Mapping) karena pada model, django memetakan atribut pada kelas python ke kolom-kolom dalam tabel database. Hal ini membuat programmer dapat berhubungan dengan database dengan menggunakan python.
+Model pada django disebut ORM (Object Relational Mapping) karena pada model, django memetakan atribut pada kelas python ke kolom-kolom dalam tabel database. Hal ini membuat programmer dapat berhubungan dengan database dengan menggunakan python.
+#
+
+# Tugas 3
+## Jawaban pertanyaan:
+1. **Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?**
+
+Data delivery dilakukan untuk pertukaran informasi antarsistem, seperti antara server dan client. Tentu hal ini penting untuk interaksi antarkomponen platform, sinkronisasi data, dan interaksi yang dinamis.
+
+2. **Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?**
+
+Saat ini JSON lebih umum penggunaannya. Hal ini terjadi karena formatnya sederhana dan mudah dibaca manusia. Penggunaannya yang lebih umum ini juga membuatnya lebih mudah diintegrasikan dengan teknologi web modern.
+
+3. **Jelaskan fungsi dari method ```is_valid()``` pada form Django dan mengapa kita membutuhkan method tersebut?**
+
+Sesuai namanya, method ```is_valid``` digunakan untuk memvalidasi input yang diberikan. Method ini memastikan hanya bentuk data yang diinginkan yang akan diproses. Jika tidak digunakan, maka 1 lapisan perlindungan akan hilang, karena method ```is_valid()``` digunakan sebagai proteksi dari input data rusak, atau hal seperti injeksi sql. Jika tidak ada method ```is_valid()```, akan lebih sulit juga untuk memastikan konsistensi data sesuai dengan format yang diharapkan. 
+
+4. **Mengapa kita membutuhkan ```csrf_token``` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan ```csrf_token``` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?**
+
+
+```csrf_token``` penting untuk proteksi aplikasi web dari serangan CSRF. Serangan CSRF (Cross-Site Request Forgery token) adalah serangan yang dilakukan oleh pelaku dengan membuat pengguna situs asli melakukan hal yang tidak pengguna itu inginkan dan ketahui. Jika menggunakan ```csrf_token```, token unik akan menyertai setiap form yang dikirim ke server. Token tersebut hanya diketahui server dan klien legit serta token tersebut harus dicocokkan saat memproses request, dimana jika tidak cocok maka request ditolak.
+
+5. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
+
+    - pertama-tama, saya membuat base.html pada root project
+        ```bash
+        {% load static %}
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            {% block meta %} {% endblock meta %}
+        </head>
+
+        <body>
+            {% block content %} {% endblock content %}
+        </body>
+        </html>
+        ```
+    
+    - kemudian, saya menambah line berikut pada settings.py bagian templates untuk set lokasi template yang digunakan pada proyek
+        ```bash
+        'DIRS': [BASE_DIR / 'templates'],
+        ```
+    - kemudian, saya set template yang ada pada direktori main/templates/ , yaitu main.html untuk ```extends``` base.html yang telah kita buat tadi.
+    - kemudian, saya memodifikasi class Product pada ```models.py``` di direktori main dengan menambahkan attribute id. line yang ditambahkan adalah sebagai berikut:
+        ```bash
+        id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+        ```
+    - lalu saya lakukan migrasi setelah memodifikasi models
+    - saya membuat ```forms.py``` pada direktori main untuk menangkap data product baru. berikut kodenya:
+        ```bash
+        from django.forms import ModelForm
+        from main.models import Product
+
+        class ProductForm(ModelForm):
+            class Meta:
+                model = Product
+                fields = ["name", "stock", "price", "description"]
+        ```
+    - saya kemudian memodifikasi ```views.py``` dengan menambah method untuk membuat form yang bisa menambah produk ketika data produk di-submit dari form. saja juga menambah line pada method ```show_main()``` untuk menangkap seluruh instance of Product. berikut kodenya:
+        ```bash
+        from django.shortcuts import render, redirect
+        from main.models import Product
+        from main.forms import ProductForm
+
+        def show_main(request):
+            products = Product.objects.all()  # Mengambil semua produk dari database
+            context = {
+                'shop_name': 'Malaccan',
+                'npm' : '2306210714',
+                'name' : 'Ilham Satya Nusabhakti',
+                'class' : 'PBP C',
+                'products': products,  # Produk-produk yang diambil dari model
+            }
+            return render(request, "main.html", context)
+
+        def create_product_entry(request):
+            form = ProductForm(request.POST or None)
+
+            if form.is_valid() and request.method == "POST":
+                form.save()
+                return redirect('main:show_main')
+
+            context = {'form': form}
+            return render(request, "create_product_entry.html", context)
+        ```
+    -  saya kemudian memodifikasi ```urls.py``` yang berada di direktori main untuk import fungsi yang telah kita buat sebelumnya dan menambahkan path URL pada urlpatterns agar fungsi tersebut dapat kita akses.
+
+    - kemudian saya membuat berkas html baru pada direktori main/templates bernama ```create_product_entry.html``` untuk tampilan ketika aplikasi web meminta input untuk produk baru. berikut kodenya:
+        ```bash
+        {% extends 'base.html' %} 
+        {% block content %}
+        <h1>Add New Product Entry</h1>
+
+        <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Product Entry" />
+            </td>
+            </tr>
+        </table>
+        </form>
+
+        {% endblock %}
+        ```
+    - saya kemudian memodifikasi ```main.html``` pada direktori main/templates supaya mendisplay setiap data products. saya juga mendekorasi tabelnya sehingga lebih mudah dibaca. berikut kodenya:
+        ```bash
+        {% extends 'base.html' %}
+        {% block content %}
+        <h1>{{ shop_name }}</h1>
+
+        <h5>NPM: </h5>
+        <p>{{ npm }}</p> 
+
+        <h5>Name: </h5>
+        <p>{{ name }}</p> 
+
+        <h5>Class: </h5>
+        <p>{{ class }}</p> 
+
+        {% if not products %}
+        <p>Belum ada data product pada malaccan.</p>
+        {% else %}
+        <table class="product-table">
+        <tr>
+            <th>Product Name</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.description }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% endif %}
+
+        <br />
+
+        <a href="{% url 'main:create_product_entry' %}">
+        <button>Add New Product Entry</button>
+        </a>
+
+        <style>
+        .product-table {
+            width: 75%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .product-table th, .product-table td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .product-table th {
+            background-color: #ebb134;
+            color: black;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .product-table td {
+            background-color: white;
+            color: black;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        </style>
+
+        {% endblock content %}
+        ```
+    - saya kemudian memodifikasi kode pada ```views.py``` untuk dapat mendisplay data dalam format XML dan JSON, serta mendisplay data sesuai id yang ter-generate. berikut kodenya:
+        ```bash
+        # Create your views here.
+        from django.shortcuts import render, redirect
+        from main.models import Product
+        from main.forms import ProductForm
+        from django.http import HttpResponse
+        from django.core import serializers
+
+        def show_main(request):
+            products = Product.objects.all()  # Mengambil semua produk dari database
+            context = {
+                'shop_name': 'Malaccan',
+                'npm' : '2306210714',
+                'name' : 'Ilham Satya Nusabhakti',
+                'class' : 'PBP C',
+                'products': products,  # Produk-produk yang diambil dari model
+            }
+            return render(request, "main.html", context)
+
+        def create_product_entry(request):
+            form = ProductForm(request.POST or None)
+
+            if form.is_valid() and request.method == "POST":
+                form.save()
+                return redirect('main:show_main')
+
+            context = {'form': form}
+            return render(request, "create_product_entry.html", context)
+
+        def show_xml(request):
+            data = Product.objects.all()
+            return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+        def show_json(request):
+            data = Product.objects.all()
+            return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+        def show_xml_by_id(request, id):
+            data = Product.objects.filter(pk=id)
+            return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+        def show_json_by_id(request, id):
+            data = Product.objects.filter(pk=id)
+            return HttpResponse(serializers.serialize("json", data), content_type="application/json")       
+        ```
+    - tentu setelah perubahan ini saya harus memodifikasi lagi kode pada ```urls.py``` supaya meng-import function yang kita buat dan menambahkan path URL pada urlpatterns. berikut kodenya:
+        ```bash
+        from django.urls import path
+        from main.views import show_main, create_product_entry, show_xml, show_json, show_xml_by_id, show_json_by_id
+
+        app_name = 'main'
+
+        urlpatterns = [
+            path('', show_main, name='show_main'),
+            path('create-product-entry', create_product_entry, name='create_product_entry'),
+            path('xml/', show_xml, name='show_xml'),
+            path('json/', show_json, name='show_json'),
+            path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+            path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+        ]
+        ```
+#
+# Screenshot PostMan
+
+
