@@ -13,7 +13,7 @@
 - [Checklist Tugas 2](#checklist-tugas-2)
 - [Jawaban Tugas 3](#tugas-3)
 - [Checklist Tugas 3](#checklist-tugas-3)
-- [Screen Shot PostMan](#screenshot-postman)
+- [Screenshot Postman](#screenshot-postman)
 
 #
 # Tugas 2 
@@ -397,7 +397,7 @@ Sesuai namanya, method ```is_valid``` digunakan untuk memvalidasi input yang dib
         ```
 #
 
-# Screenshot PostMan
+# Screenshot Postman
 [Back to Contents](#contents)
 
 **show_xml**
