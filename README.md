@@ -1,13 +1,23 @@
-PWS : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
-
 # Malaccan: Delivering Goods Across the Globe with Generational Trust, Like the Malacca Strait's Legacy in Global Trade.
+# Credentials
+
+- Nama  : Ilham Satya Nusabhakti
+- NPM   : 2306210714
+- Kelas : PBP C
+- PWS Link : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
+#
+
 
 # Contents:
 - [Jawaban Tugas 2](#tugas-2)
+- [Checklist Tugas 2](#checklist-tugas-2)
 - [Jawaban Tugas 3](#tugas-3)
+- [Checklist Tugas 3](#checklist-tugas-3)
 - [Screen Shot PostMan](#screenshot-postman)
+
 #
-# Tugas 2
+# Tugas 2 
+[Back to Contents](#contents)
 ## Jawaban pertanyaan:
 1. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
 
@@ -122,8 +132,26 @@ pertama, django menggunakan bahasa pemrograman yang kami, mahasiswa fasilkom, su
 
 Model pada django disebut ORM (Object Relational Mapping) karena pada model, django memetakan atribut pada kelas python ke kolom-kolom dalam tabel database. Hal ini membuat programmer dapat berhubungan dengan database dengan menggunakan python.
 #
+# Checklist Tugas 2
+- [x] Membuat sebuah proyek Django baru.
+- [x] Membuat aplikasi dengan nama `main` pada proyek tersebut.
+- [x] Melakukan _routing_ pada proyek agar dapat menjalankan aplikasi `main`.
+- [x] Membuat model pada aplikasi `main` dengan nama `Product` dan memiliki atribut wajib sebagai berikut:
+  - ```name```
+  - ```price```
+  - ```description```
+- [x] Membuat sebuah fungsi pada ```views.py``` untuk dikembalikan ke dalam sebuah _template_ HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.
+- [x] Membuat sebuah _routing_ pada ```urls.py``` aplikasi ```main``` untuk memetakan fungsi yang telah dibuat pada ```views.py```.
+- [x] Melakukan _deployment_ ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.
+- [x] Membuat sebuah ```README.md``` yang berisi tautan menuju aplikasi PWS yang sudah di-_deploy_, serta jawaban dari beberapa pertanyaan berikut:
+  - Jelaskan bagaimana cara kamu mengimplementasikan _checklist_ di atas secara _step-by-step_ (bukan hanya sekadar mengikuti tutorial).
+  - Buatlah bagan yang berisi _request client_ ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara ```urls.py```, ```views.py```, ```models.py```, dan berkas ```html```.
+  - Jelaskan fungsi ```git``` dalam pengembangan perangkat lunak!
+  - Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
+  - Mengapa model pada Django disebut sebagai _ORM_?
 
 # Tugas 3
+[Back to Contents](#contents)
 ## Jawaban pertanyaan:
 1. **Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?**
 
@@ -367,6 +395,34 @@ Sesuai namanya, method ```is_valid``` digunakan untuk memvalidasi input yang dib
         ]
         ```
 #
+
 # Screenshot PostMan
+[Back to Contents](#contents)
+
+**show_xml**
+![show_xml](https://i.ibb.co.com/MVt98g7/xml.png)
+**show_json**
+![show_json](https://i.ibb.co.com/yBwJHKp/json.png)
+**xml_by_id**
+![xml_by_id](https://i.ibb.co.com/VDSfWYm/xml-by-id.png) 
+**json_by_id**
+![json_by_id](https://i.ibb.co.com/M6fgYsM/json-by-id.png)
+
+# Checklist Tugas 3
+[Back to Contents](#contents)
+
+- [x] Membuat input ```form``` untuk menambahkan objek model pada app sebelumnya.
+- [x] Tambahkan 4 fungsi ```views``` baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+- [x] Membuat routing URL untuk masing-masing ```views``` yang telah ditambahkan pada poin 2.
+- [x] Menjawab beberapa pertanyaan berikut pada ```README.md``` pada root folder.
+  - [x] Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+  - [x] Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+  - [x] Jelaskan fungsi dari method ```is_valid()``` pada form Django dan mengapa kita membutuhkan method tersebut?
+  - [x] Mengapa kita membutuhkan ```csrf_token``` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan ```csrf_token``` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+  - [x] Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+- [x] Mengakses keempat URL di poin 2 menggunakan Postman, membuat _screenshot_ dari hasil akses URL pada Postman, dan menambahkannya ke dalam ```README.md```.
+- [x] Melakukan ```add```-```commit```-```push``` ke GitHub.
+
+
 
 
