@@ -1,10 +1,10 @@
 # Malaccan: Delivering Goods Across the Globe with Generational Trust, Like the Malacca Strait's Legacy in Global Trade.
-# Credentials
+# Personal Data
 
 - Nama  : Ilham Satya Nusabhakti
 - NPM   : 2306210714
 - Kelas : PBP C
-- PWS Link : http://ilham-satya-malaccanrevised.pbp.cs.ui.ac.id
+- PWS Link : http://ilham-satya-malaccan.pbp.cs.ui.ac.id
 #
 
 
@@ -133,6 +133,7 @@ pertama, django menggunakan bahasa pemrograman yang kami, mahasiswa fasilkom, su
 Model pada django disebut ORM (Object Relational Mapping) karena pada model, django memetakan atribut pada kelas python ke kolom-kolom dalam tabel database. Hal ini membuat programmer dapat berhubungan dengan database dengan menggunakan python.
 #
 # Checklist Tugas 2
+[Back to Contents](#contents)
 - [x] Membuat sebuah proyek Django baru.
 - [x] Membuat aplikasi dengan nama `main` pada proyek tersebut.
 - [x] Melakukan _routing_ pada proyek agar dapat menjalankan aplikasi `main`.
