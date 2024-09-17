@@ -12,8 +12,9 @@
 - [Jawaban Tugas 2](#tugas-2)
 - [Checklist Tugas 2](#checklist-tugas-2)
 - [Jawaban Tugas 3](#tugas-3)
-- [Checklist Tugas 3](#checklist-tugas-3)
 - [Screenshot Postman](#screenshot-postman)
+- [Checklist Tugas 3](#checklist-tugas-3)
+
 
 #
 # Tugas 2 
