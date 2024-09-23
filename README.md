@@ -14,6 +14,8 @@
 - [Jawaban Tugas 3](#tugas-3)
 - [Screenshot Postman](#screenshot-postman)
 - [Checklist Tugas 3](#checklist-tugas-3)
+- [Jawaban Tugas 4](#tugas-4)
+- [Checklist Tugas 4](#checklist-tugas-4)
 
 
 #
@@ -424,6 +426,23 @@ Sesuai namanya, method ```is_valid``` digunakan untuk memvalidasi input yang dib
   - [x] Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 - [x] Mengakses keempat URL di poin 2 menggunakan Postman, membuat _screenshot_ dari hasil akses URL pada Postman, dan menambahkannya ke dalam ```README.md```.
 - [x] Melakukan ```add```-```commit```-```push``` ke GitHub.
+
+# Tugas 4
+[Back to Contents](#contents)
+
+# Checklist Tugas 4
+[Back to Contents](#contents)
+- [x] Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+- [x] Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.
+- [x] Menghubungkan model Product dengan User.
+- [x] Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last login pada halaman utama aplikasi.
+- [x] Menjawab beberapa pertanyaan berikut pada README.md pada root folder (silakan modifikasi README.md yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+    - [x] Apa perbedaan antara HttpResponseRedirect() dan redirect()
+    - [x]  Jelaskan cara kerja penghubungan model MoodEntry dengan User!
+    - [x] Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+    - [x] Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+    - [x] Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+- [x] Melakukan add-commit-push ke GitHub.
 
 
 
