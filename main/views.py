@@ -28,7 +28,7 @@ def show_main(request):
     return render(request, "main.html", context)
 
 def create_product_entry(request):
-    form = ProductForm(request.POST or None)
+    form = ProductForm(request.POST,  request.FILES)
 
     if form.is_valid() and request.method == "POST":
         product_entry = form.save(commit = False)
@@ -77,6 +77,8 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+        else:
+            messages.error(request, 'Wrong username or password')
 
     else:
         form = AuthenticationForm(request)

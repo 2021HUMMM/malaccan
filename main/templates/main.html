@@ -11,30 +11,50 @@
 
   <!-- Information cards for NPM, Name, Class -->
   <div class="p-2 mb-6 relative">
-    <div class="relative grid grid-cols-1 z-30 md:grid-cols-3 gap-8">
+    <!-- Arrow Button -->
+    <button id="toggle-button" class="w-full text-center text-lg font-bold mb-4 flex justify-center items-center">
+      <span>Creator's credentials</span>
+      <svg id="arrow-icon" class="w-6 h-6 ml-2 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    
+    <!-- Cards Section -->
+    <div id="card-section" class="relative grid grid-cols-1 z-30 md:grid-cols-3 gap-8 overflow-hidden transition-all duration-500 max-h-0">
       {% include "card_info.html" with title='NPM' value=npm %}
       {% include "card_info.html" with title='Name' value=name %}
       {% include "card_info.html" with title='Class' value=class %}
     </div>
-    <div class="w-full px-6 absolute top-[44px] left-0 z-20 hidden md:flex">
-      <div class="w-full min-h-4 bg-indigo-700"></div>
-    </div>
-    <div class="h-full w-full py-6 absolute top-0 left-0 z-20 md:hidden flex">
-      <div class="h-full min-w-4 bg-indigo-700 mx-auto"></div>
-    </div>
   </div>
+
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const cardSection = document.getElementById('card-section');
+    const arrowIcon = document.getElementById('arrow-icon');
+
+    toggleButton.addEventListener('click', function () {
+      // Toggle the max-height for animation
+      if (cardSection.style.maxHeight === '0px' || cardSection.style.maxHeight === '') {
+        cardSection.style.maxHeight = cardSection.scrollHeight + 'px'; // Expand
+        arrowIcon.classList.add('rotate-180'); // Rotate arrow
+      } else {
+        cardSection.style.maxHeight = '0px'; // Collapse
+        arrowIcon.classList.remove('rotate-180'); // Reset arrow
+      }
+    });
+  </script>
 
   <!-- Last login -->
   <div class="px-3 mb-4">
-    <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit">
+    <div class="flex rounded-md items-center py-2 px-4 w-fit" style="background-color: #264653;">
       <h1 class="text-white text-center">Last Login: {{last_login}}</h1>
     </div>
   </div>
 
   <!-- Add new product button -->
   <div class="flex justify-end mb-6">
-    <a href="{% url 'main:create_product_entry' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-      Add New Product Entry
+    <a href="{% url 'main:create_product_entry' %}" class="bg-yellow-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+      Add New Product
     </a>
   </div>
   

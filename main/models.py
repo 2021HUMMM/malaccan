@@ -10,6 +10,8 @@ class Product(models.Model):
     stock = models.IntegerField()
     price = models.IntegerField()  
     description = models.TextField()  
+    image = models.ImageField(upload_to='products/', null=True, blank=True)  # Add the image field
+
 
     def __str__(self):
         return self.name
