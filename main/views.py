@@ -11,18 +11,18 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import reverse
 import datetime
-
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='/login')
 def show_main(request):
-    products = Product.objects.filter(user=request.user)  # Mengambil semua produk dari database
     context = {
         'name': request.user.username,
         'shop_name': 'Malaccan',
         'npm' : '2306210714',
         'name' : 'Ilham Satya Nusabhakti',
         'class' : 'PBP C',
-        'products': products,  # Produk-produk yang diambil dari model
         'last_login': request.COOKIES['last_login'],
     }
     return render(request, "main.html", context)
@@ -40,11 +40,11 @@ def create_product_entry(request):
     return render(request, "create_product_entry.html", context)
 
 def show_xml(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -92,10 +92,10 @@ def logout_user(request):
     return response
 
 def edit_product(request, id):
-    # Get mood entry berdasarkan id
+    # Get product entry berdasarkan id
     product = Product.objects.get(pk = id)
 
-    # Set mood entry sebagai instance dari form
+    # Set product entry sebagai instance dari form
     form = ProductForm(request.POST or None, instance=product)
 
     if form.is_valid() and request.method == "POST":
@@ -107,9 +107,36 @@ def edit_product(request, id):
     return render(request, "edit_product.html", context)
 
 def delete_product(request, id):
-    # Get mood berdasarkan id
+    # Get product berdasarkan id
     product = Product.objects.get(pk = id)
-    # Hapus mood
+    # Hapus product
     product.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    # Mengambil data dari request POST
+    name = strip_tags(request.POST.get("name"))
+    stock = request.POST.get("stock")
+    price = request.POST.get("price")
+    description = strip_tags(request.POST.get("description"))
+    user = request.user  # User yang sedang login
+    
+    # Mengambil file gambar jika ada
+    image = request.FILES.get("image")  # Untuk file yang diupload
+
+    # Buat product baru
+    new_product = Product(
+        name=name,
+        stock=stock,
+        price=price,
+        description=description,
+        user=user,
+        image=image  # Set gambar jika ada
+    )
+    new_product.save()
+
+    # Kembalikan response sukses
+    return HttpResponse(b"CREATED", status=201)
