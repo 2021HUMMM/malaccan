@@ -22,4 +22,4 @@ class ProductForm(ModelForm):
             raise forms.ValidationError("Price must be a positive number.")
         return price
     
-    image = forms.ImageField(required=True, label='Product Image', help_text='Upload an image of the product.')
+    image = forms.ImageField(required=False, label='Product Image', help_text='Upload an image of the product.')
